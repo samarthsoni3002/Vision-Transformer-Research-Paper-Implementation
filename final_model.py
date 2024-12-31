@@ -33,11 +33,11 @@ class FinalModel(nn.Module):
         
         self.embedding_dropout = nn.Dropout(p=embedding_dropout)
         
-        self.vision_transformer = VisionTransformer(embedding_dim=embedding_dim,
+        self.vision_transformer = nn.Sequential(*[VisionTransformer(embedding_dim=embedding_dim,
                                 num_heads=num_head,
                                 mlp_dropout=mlp_dropout,
                                 attention_dropout=attention_dropout,
-                                mlp_size=3072) 
+                                mlp_size=3072) for _ in range(num_transformer_layers)])
         
         self.classifier = nn.Sequential(
             nn.LayerNorm(normalized_shape=embedding_dim),

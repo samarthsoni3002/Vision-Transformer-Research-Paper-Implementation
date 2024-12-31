@@ -65,5 +65,8 @@ def model_summary(model):
 def accuracy_fn(y_true,y_pred):
     
     correct = torch.eq(y_true,y_pred).sum().item()
-    acc = 100*(correct/len(y_pred))
-    return acc
+    print(y_pred)
+    acc = (correct/len(y_pred))
+    return acc*100
+
+

@@ -27,19 +27,18 @@ class ImageEmbedding(nn.Module):
 
          
     def forward(self,x):
-        print(x.shape)
         
-        if (x.shape[0] == 32):
-            image_resolution = x.shape[-1]
-            assert image_resolution % self.patch_size == 0
-            
-            x_patched = self.patcher(x)
-            x_flatten = self.flatten(x_patched)
-            x_flatten_permuted = x_flatten.permute(0,2,1)
-            print(x_flatten_permuted.shape)
-            print(self.class_token.shape)
-            x_with_class_token = torch.cat((self.class_token,x_flatten_permuted),dim=1)
-            return x_with_class_token + self.positional_embedding
+        image_resolution = x.shape[-1]
+        assert image_resolution % self.patch_size == 0
+        
+        x_patched = self.patcher(x)
+        x_flatten = self.flatten(x_patched)
+        x_flatten_permuted = x_flatten.permute(0,2,1)
+        x_with_class_token = torch.cat((self.class_token,x_flatten_permuted),dim=1)
+        return x_with_class_token + self.positional_embedding
+        
+        
+
         
     
 
